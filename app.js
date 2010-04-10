@@ -1,4 +1,4 @@
-(function (global) {
+App.setText = (function (global) {
   var App = {};
 
   App.version = '0.1.0';
