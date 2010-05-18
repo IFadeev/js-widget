@@ -40,3 +40,31 @@ App.setText = (function (global) {
 
   global.App = App;
 })(this);
+
+App.ajaxGet = function (url, callback) {
+  var xhr;
+
+  if (global.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+  } else {
+    try {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    } catch (e) {
+      App.log('XHR not supported');
+      return;
+    }
+  }
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(xhr.responseText);
+      } else {
+        App.log('Request failed: ' + xhr.status);
+      }
+    }
+  };
+
+  xhr.open('GET', url, true);
+  xhr.send(null);
+};
